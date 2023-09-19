@@ -1,0 +1,133 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model Measurement {
+  id            Int       @id @default(autoincrement())
+  code          String?
+  comments      String?
+  heartbeat     Int?
+  maximum       Int?
+  minimum       Int?
+  imc           Decimal?
+  height        Decimal?
+  alert         Boolean   @default(false)
+  status        Int?      @default(1)
+  measurement_at DateTime? @default(now()) @db.Timestamp(6)
+  created_at    DateTime? @default(now())
+  updated_at    DateTime? @updatedAt
+  weight        Decimal?
+  usercode      String?
+
+  @@map("measurements")
+}
+
+model Medicine {
+  id         Int       @id @default(autoincrement())
+  code       String?
+  name       String?
+  namerefer  String?
+  laboratory String?
+  dosage     String?
+  price      Decimal?
+  usercode   String?
+  status     Int?      @default(1)
+  created_at DateTime? @default(now())
+  updated_at DateTime? @updatedAt
+
+  @@map("medicines")
+}
+
+model Food {
+  id                          Int       @id @default(autoincrement())
+  code                        String?
+  type                        String?
+  perceivedSensation          String?
+  labestimatedCaloriesoratory String?
+  foodDetails                 String?
+  caloriesCalculation         Decimal?
+  comments                    String?
+  usercode                    String?
+  status                      Int?      @default(1)
+  created_at                  DateTime? @default(now())
+  updated_at                  DateTime? @updatedAt
+
+  @@map("foods")
+}
+
+model PhysicalActivity {
+  id                 Int       @id @default(autoincrement())
+  code               String?
+  calories           Int?
+  activity           String?
+  intensity          String?
+  perceivedSensation String?
+  local              String?
+  distance           Decimal?
+  start              DateTime?
+  end                DateTime?
+  comments           String?
+  time               String?
+  usercode           String?
+  status             Int?      @default(1)
+  created_at         DateTime? @default(now())
+  updated_at         DateTime? @updatedAt
+
+  @@map("physicalactivities")
+}
+
+model User {
+  id                Int       @id @default(autoincrement())
+  code              String?
+  name              String?
+  birthdate         String?
+  height            Decimal?
+  weight            Decimal?
+  bloodtype         String?
+  imc               Decimal?
+  imcclassification String?
+  email             String?
+  password          String?
+  passwordcrypt     String?
+  status            Int?      @default(1)
+  created_at        DateTime? @default(now())
+  updated_at        DateTime? @updatedAt
+
+  @@map("users")
+}
+
+model SleepNight {
+  id                    Int       @id @default(autoincrement())
+  code                  String?
+  start                 DateTime?
+  wakeUp                DateTime?
+  sleepHours            Decimal?
+  sleepQualitySensation String?
+  comments              String?
+  status                Int?      @default(1)
+  created_at            DateTime? @default(now())
+  updated_at            DateTime? @updatedAt
+
+  @@map("sleepnights")
+}
+
+model Weighing {
+  id          Int       @id @default(autoincrement())
+  code        String?
+  value       Decimal?
+  comments    String?
+  weighing_at DateTime? @default(now())
+  status      Int?      @default(1)
+  created_at  DateTime? @default(now())
+  updated_at  DateTime? @updatedAt
+
+  @@map("weighings")
+}
